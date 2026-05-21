@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -768,7 +769,7 @@ function renderBarRows(){
       <div class="chg-cell">${chgHtml(chg*(b.var>1?1.02:0.98))}</div>
     </div>`).join('');
   document.getElementById('barsTable').innerHTML=`
-    <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
+    <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div></div>
     ${rows}`;
 }
 
@@ -796,7 +797,7 @@ function renderCoinRows(){
       <div class="chg-cell">${chgHtml(chg)}</div>
     </div>`).join('');
   document.getElementById('coinsTable').innerHTML=`
-    <div class="table-head"><div>العملة</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
+    <div class="table-head"><div>العملة</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div></div>
     ${rows}`;
 }
 
@@ -819,7 +820,7 @@ function renderSilverRows(){
       <div style="text-align:center"><button class="row-buy">شراء</button></div>
     </div>`).join('');
   document.getElementById('silverTable').innerHTML=`
-    <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
+    <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div></div>
     ${rows}`;
 }
 
