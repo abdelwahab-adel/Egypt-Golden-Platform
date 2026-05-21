@@ -206,26 +206,8 @@
 </head>
 <body>
 
-<!-- ══ API KEY SETUP OVERLAY ══ -->
-<div id="setup-overlay">
-  <div class="setup-box">
-    <div class="setup-icon">🔑</div>
-    <div class="setup-title">مفتاح API الذهب</div>
-    <div class="setup-desc">
-      لعرض أسعار الذهب الحقيقية، تحتاج مفتاح مجاني من <a class="setup-link" href="https://metals.dev" target="_blank">metals.dev</a>
-    </div>
-    <div class="setup-steps">
-      <b>1.</b> افتح <a class="setup-link" href="https://metals.dev" target="_blank">metals.dev</a> وسجّل حساباً مجانياً<br>
-      <b>2.</b> ادخل الـ Dashboard وانسخ الـ API Key<br>
-      <b>3.</b> الخطة المجانية: 100 طلب/شهر ✅<br>
-      <b>4.</b> ألصق المفتاح أدناه واضغط تأكيد
-    </div>
-    <input class="inp" type="text" id="api-key-input" placeholder="ألصق مفتاح metals.dev هنا..." style="text-align:left;direction:ltr;font-family:monospace;">
-    <div style="font-size:11px;color:var(--text2);margin-bottom:12px;">المفتاح محفوظ في متصفحك فقط، لا يُرسل لأي خادم آخر.</div>
-    <button class="btn-primary" onclick="confirmApiKey()">تأكيد وبدء التطبيق</button>
-    <button style="width:100%;margin-top:8px;padding:8px;background:none;border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-size:12px;cursor:pointer;font-family:'Cairo',sans-serif;" onclick="useDemoMode()">استخدام البيانات التجريبية (غير حقيقية)</button>
-  </div>
-</div>
+<!-- API key setup removed: using free no-key APIs -->
+<div id="setup-overlay" style="display:none;"><input id="api-key-input" type="hidden"></div>
 
 <!-- ══ HEADER ══ -->
 <header class="header">
@@ -241,7 +223,7 @@
     <div class="countdown-wrap">تحديث في <b id="cd-val">60</b>ث</div>
     <div class="live-badge"><div class="live-dot"></div><span id="live-time">--:--</span></div>
     <button class="btn-sm" onclick="manualRefresh()">↻ تحديث</button>
-    <button class="btn-sm" onclick="changeKey()">🔑</button>
+    
   </div>
 </header>
 
@@ -548,49 +530,38 @@ function changeKey() {
 
 // ── API FETCH: METALS.DEV ──
 async function fetchMetalsData() {
-  if(S.demoMode){
-    // Simulate small fluctuation in demo
-    S.prevXauEgp = S.xauEgp;
-    S.prevXauUsd = S.xauUsd;
-    S.xauUsd *= 1 + (rnd()-0.5)*0.002;
-    S.xauEgp = S.xauUsd * S.usdEgp;
-    return true;
-  }
   try {
-    // Fetch gold in EGP directly
-    const url = `https://api.metals.dev/v1/latest?api_key=${S.apiKey}&currency=EGP&unit=toz`;
-    const res = await fetch(url);
+    // Free, no-key gold spot API (USD per troy ounce)
+    const res = await fetch('https://api.gold-api.com/price/XAU');
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    if(data.status && data.status !== 'success') throw new Error(data.message || 'API error');
+    const xauUsd = Number(data.price);
+    if(!xauUsd || !isFinite(xauUsd)) throw new Error('Invalid price');
 
-    S.prevXauEgp = S.xauEgp || data.metals.gold * 0.998;
-    S.prevXauUsd = S.xauUsd;
-    S.xauEgp = data.metals.gold;   // price per troy oz in EGP
-
-    // Also fetch USD version to get XAU/USD and USD/EGP
-    const urlUsd = `https://api.metals.dev/v1/latest?api_key=${S.apiKey}&currency=USD&unit=toz`;
-    const resUsd = await fetch(urlUsd);
-    const dataUsd = await resUsd.json();
-    S.xauUsd = dataUsd.metals.gold;
-    S.usdEgp = S.xauEgp / S.xauUsd;
+    S.prevXauUsd = S.xauUsd || xauUsd * 0.998;
+    S.prevXauEgp = S.xauEgp || xauUsd * (S.usdEgp || 50) * 0.998;
+    S.xauUsd = xauUsd;
+    // Compute EGP price using latest USD/EGP from FX feed
+    if(S.usdEgp) S.xauEgp = xauUsd * S.usdEgp;
 
     S.lastFetch = new Date();
     hideError();
-    document.getElementById('data-mode-tag').textContent = '✅ بيانات حقيقية';
-    document.getElementById('data-mode-tag').className = 'real-tag';
-    document.getElementById('mini-source').textContent = 'metals.dev';
-    document.getElementById('mini-source').className = 'real-tag';
+    const tag = document.getElementById('data-mode-tag');
+    tag.textContent = '✅ بيانات حقيقية';
+    tag.className = 'real-tag';
+    const ms = document.getElementById('mini-source');
+    ms.textContent = 'gold-api.com';
+    ms.className = 'real-tag';
     return true;
   } catch(e) {
-    showError('خطأ في الاتصال بـ metals.dev: ' + e.message + ' — تأكد من صحة المفتاح');
+    showError('خطأ في تحميل سعر الذهب: ' + e.message);
     return false;
   }
 }
 
 // ── API FETCH: EXCHANGE RATES ──
 async function fetchFXData() {
-  if(S.demoMode) return;
+  
   try {
     const res = await fetch('https://open.er-api.com/v6/latest/USD');
     if(!res.ok) throw new Error('FX API error');
@@ -1048,7 +1019,9 @@ function renderAll() {
 }
 
 async function fetchAll() {
-  await Promise.all([fetchMetalsData(), fetchFXData()]);
+  // FX first so xauEgp = xauUsd * usdEgp is accurate
+  await fetchFXData();
+  await fetchMetalsData();
   renderAll();
 }
 
@@ -1085,14 +1058,7 @@ async function init() {
 }
 
 // ── START ──
-// Check if key already stored
-if(S.apiKey) {
-  document.getElementById('api-key-input').value = S.apiKey;
-  document.getElementById('setup-overlay').style.display = 'none';
-  init();
-} else {
-  // Show setup screen
-}
+init();
 </script>
 </body>
 </html>
