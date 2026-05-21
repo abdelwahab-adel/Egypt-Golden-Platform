@@ -237,10 +237,10 @@ body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);
     Bullion Gold
   </a>
   <ul class="nav-links">
-    <li><a href="#">أسعار الذهب</a></li>
+    <!-- <li><a href="#">أسعار الذهب</a></li>
     <li><a href="#" class="active">السبائك والعملات</a></li>
     <li><a href="#">الأخبار</a></li>
-    <li><a href="#">معلومات اقتصادية</a></li>
+    <li><a href="#">معلومات اقتصادية</a></li> -->
   </ul>
   <div class="nav-right">
     <div class="countdown">تحديث في <b id="cd-val">60</b>ث</div>
@@ -350,13 +350,13 @@ body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);
 
       <div class="section-title"><div class="section-icon">📦</div>سبائك الذهب عيار 24</div>
       <div class="table-card" id="barsTable">
-        <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
+        <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div></div>
         <!-- Rows injected by JS -->
       </div>
 
       <div class="section-title"><div class="section-icon">🪙</div>عملات ذهبية عيار 21 وعيار 22</div>
       <div class="table-card" id="coinsTable">
-        <div class="table-head"><div>العملة</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
+        <div class="table-head"><div>العملة</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div></div>
       </div>
     </div>
 
@@ -364,7 +364,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);
     <div class="silver-section" id="silverSection">
       <div class="section-title"><div class="section-icon">⚪</div>سبائك الفضة</div>
       <div class="table-card" id="silverTable">
-        <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
+        <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div></div>
       </div>
     </div>
 
@@ -766,7 +766,6 @@ function renderBarRows(){
       <div><div class="row-name">${b.name}</div><div class="row-sub">${b.sub}</div>${b.badge?'<span class="gold-badge">✦ موثّق</span>':''}</div>
       <div class="row-price">${fmt(b.mult*b.var)} <span class="row-price-sub">ج</span></div>
       <div class="chg-cell">${chgHtml(chg*(b.var>1?1.02:0.98))}</div>
-      <div style="text-align:center"><button class="row-buy">شراء</button></div>
     </div>`).join('');
   document.getElementById('barsTable').innerHTML=`
     <div class="table-head"><div>المنتج</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
@@ -795,7 +794,6 @@ function renderCoinRows(){
       <div><div class="row-name">${c.name}</div><div class="row-sub">${c.sub}</div>${c.badge?`<span class="gold-badge">✦ ${c.badge}</span>`:''}</div>
       <div class="row-price">${fmt(p21*c.mult*c.var)} <span class="row-price-sub">ج</span></div>
       <div class="chg-cell">${chgHtml(chg)}</div>
-      <div style="text-align:center"><button class="row-buy">شراء</button></div>
     </div>`).join('');
   document.getElementById('coinsTable').innerHTML=`
     <div class="table-head"><div>العملة</div><div style="text-align:center">سعر البيع</div><div style="text-align:center">التغيّر</div><div style="text-align:center">إجراء</div></div>
