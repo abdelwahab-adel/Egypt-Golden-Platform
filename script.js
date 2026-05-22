@@ -840,25 +840,7 @@ async function askInsightAI(){
   btn.disabled=false;btn.textContent='تحليل الآن 🧠';
 }
 
-  let html='<html dir="rtl"><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;padding:20px;direction:rtl}h1{color:#1E2D4E;border-bottom:3px solid #C9922A;padding-bottom:8px}table{width:100%;border-collapse:collapse;margin-top:16px}th{background:#1E2D4E;color:#E8B84B;padding:8px;text-align:right}td{padding:8px;border-bottom:1px solid #eee}tr:nth-child(even){background:#faf7f2}.up{color:#1a7a4a}.dn{color:#c0392b}.summary{background:#f5f5f5;padding:12px;border-radius:8px;margin-top:16px}</style></head><body>';
-  html+='<h1>🥇 تقرير محفظة منصة ذهب</h1>';
-  html+='<p>تاريخ التقرير: '+new Date().toLocaleDateString('ar-EG')+'</p>';
-  html+='<table><tr><th>العيار</th><th>الوزن</th><th>سعر الشراء</th><th>التاريخ</th><th>القيمة الحالية</th><th>الربح/الخسارة</th></tr>';
-  let tv=0,tc=0;
-  S.portfolio.forEach(item=>{
-    const cur=S.xauEgp?kPrice(item.k):item.p;
-    const val=cur*item.w,cost=item.p*item.w,pnl=val-cost;
-    tv+=val;tc+=cost;
-    html+=`<tr><td>عيار ${item.k}</td><td>${item.w} جم</td><td>${fmt(item.p)} ج</td><td>${item.date}</td><td>${fmt(val)} ج</td><td class="${pnl>=0?'up':'dn'}">${pnl>=0?'+':''}${fmt(pnl)} ج</td></tr>`;
-  });
-  html+='</table>';
-  const pnl=tv-tc;
-  html+=`<div class="summary"><b>الإجمالي:</b> القيمة الحالية = ${fmt(tv)} ج | التكلفة = ${fmt(tc)} ج | الربح/الخسارة = <span class="${pnl>=0?'up':'dn'}">${pnl>=0?'+':''}${fmt(pnl)} ج (${tc>0?((pnl/tc)*100).toFixed(1):0}%)</span></div>`;
-  html+='</body></html>';
-  const w=window.open('','_blank');
-  w.document.write(html);w.document.close();
-  setTimeout(()=>w.print(),500);
-
+ 
 
 /* ── EXPORT EXCEL ── */
 function exportPortfolioExcel(){
