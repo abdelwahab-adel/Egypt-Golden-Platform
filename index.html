@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -24,7 +23,7 @@
     <li><a href="#">معلومات اقتصادية</a></li> -->
   </ul>
   <div class="nav-right">
-    <div class="countdown">تحديث في <b id="cd-val">60</b>ث</div>
+    <div class="countdown" id="cd-label">تحديث في <b id="cd-val">60</b>ث</div>
     <div class="live-badge"><div class="live-dot"></div><span id="live-time">--:--</span></div>
     <button class="btn-refresh-nav" onclick="manualRefresh()">↻ تحديث</button>
   </div>
@@ -45,16 +44,53 @@
 </div>
 
 <!-- TABS NAV -->
-<div class="tabs-wrap">
-  <div class="tabs">
-    <button class="tab-nav-btn active" onclick="switchPanel('prices',this)">💰 الأسعار</button>
-    <button class="tab-nav-btn" onclick="switchPanel('chart',this)">📈 الرسوم البيانية</button>
-    <button class="tab-nav-btn" onclick="switchPanel('currency',this)">💱 العملات</button>
-    <button class="tab-nav-btn" onclick="switchPanel('calc',this)">🧮 الحاسبة</button>
-    <button class="tab-nav-btn" onclick="switchPanel('portfolio',this)">💼 محفظتي</button>
-    <button class="tab-nav-btn" onclick="switchPanel('alerts',this)">🔔 التنبيهات</button>
-    <button class="tab-nav-btn" onclick="switchPanel('news',this)">📰 الأخبار</button>
+<div class="tabs-wrap" id="tabs-wrap">
+
+  <!-- Mobile: dropdown select -->
+  <div class="tabs-mobile-bar">
+    <div class="tabs-mobile-current" id="tabs-mobile-current" onclick="toggleMobileMenu()">
+      <span class="tmc-icon" id="tmc-icon">💰</span>
+      <span class="tmc-label" id="tmc-label">الأسعار</span>
+      <span class="tmc-arrow" id="tmc-arrow"><svg viewBox="0 0 14 14" style="width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;"><polyline points="2,4 7,10 12,4"/></svg></span>
+    </div>
+    <div class="tabs-mobile-dropdown" id="tabs-mobile-dropdown">
+      <div class="tmdd-grid">
+        <button class="tmdd-item active" onclick="switchPanel('prices',this)" data-icon="💰" data-label="الأسعار"><span class="tmdd-item-icon">💰</span><span>الأسعار</span></button>
+        <button class="tmdd-item" onclick="switchPanel('chart',this)" data-icon="📈" data-label="الرسوم البيانية"><span class="tmdd-item-icon">📈</span><span>الرسوم البيانية</span></button>
+        <button class="tmdd-item" onclick="switchPanel('heatmap',this)" data-icon="🌡️" data-label="خريطة السوق"><span class="tmdd-item-icon">🌡️</span><span>خريطة السوق</span></button>
+        <button class="tmdd-item" onclick="switchPanel('currency',this)" data-icon="💱" data-label="العملات"><span class="tmdd-item-icon">💱</span><span>العملات</span></button>
+        <button class="tmdd-item" onclick="switchPanel('calc',this)" data-icon="🧮" data-label="الحاسبة"><span class="tmdd-item-icon">🧮</span><span>الحاسبة</span></button>
+        <button class="tmdd-item" onclick="switchPanel('portfolio',this)" data-icon="💼" data-label="محفظتي"><span class="tmdd-item-icon">💼</span><span>محفظتي</span></button>
+        <button class="tmdd-item" onclick="switchPanel('alerts',this)" data-icon="🔔" data-label="التنبيهات"><span class="tmdd-item-icon">🔔</span><span>التنبيهات</span></button>
+        <button class="tmdd-item" onclick="switchPanel('watchlist',this)" data-icon="⭐" data-label="المفضلة"><span class="tmdd-item-icon">⭐</span><span>المفضلة</span></button>
+        <button class="tmdd-item" onclick="switchPanel('insights',this)" data-icon="🧠" data-label="التحليل الذكي"><span class="tmdd-item-icon">🧠</span><span>التحليل الذكي</span></button>
+        <button class="tmdd-item" onclick="switchPanel('timing',this)" data-icon="⏰" data-label="توقيت الشراء"><span class="tmdd-item-icon">⏰</span><span>توقيت الشراء</span></button>
+        <button class="tmdd-item" onclick="switchPanel('pulse',this)" data-icon="🔥" data-label="نبض السوق"><span class="tmdd-item-icon">🔥</span><span>نبض السوق</span></button>
+        <button class="tmdd-item" onclick="switchPanel('seasons',this)" data-icon="📅" data-label="مواسم الذهب"><span class="tmdd-item-icon">📅</span><span>مواسم الذهب</span></button>
+        <button class="tmdd-item" onclick="switchPanel('news',this)" data-icon="📰" data-label="الأخبار"><span class="tmdd-item-icon">📰</span><span>الأخبار</span></button>
+        <button class="tmdd-item" onclick="switchPanel('about',this)" data-icon="🏛️" data-label="من نحن"><span class="tmdd-item-icon">🏛️</span><span>من نحن</span></button>
+      </div>
+    </div>
   </div>
+
+  <!-- Desktop: scrollable tabs row -->
+  <div class="tabs" id="tabs-desktop">
+    <button class="tab-nav-btn active" onclick="switchPanel('prices',this)" data-icon="💰" data-label="الأسعار">💰 الأسعار</button>
+    <button class="tab-nav-btn" onclick="switchPanel('chart',this)" data-icon="📈" data-label="الرسوم البيانية">📈 الرسوم البيانية</button>
+    <button class="tab-nav-btn" onclick="switchPanel('heatmap',this)" data-icon="🌡️" data-label="خريطة السوق">🌡️ خريطة السوق</button>
+    <button class="tab-nav-btn" onclick="switchPanel('currency',this)" data-icon="💱" data-label="العملات">💱 العملات</button>
+    <button class="tab-nav-btn" onclick="switchPanel('calc',this)" data-icon="🧮" data-label="الحاسبة">🧮 الحاسبة</button>
+    <button class="tab-nav-btn" onclick="switchPanel('portfolio',this)" data-icon="💼" data-label="محفظتي">💼 محفظتي</button>
+    <button class="tab-nav-btn" onclick="switchPanel('alerts',this)" data-icon="🔔" data-label="التنبيهات">🔔 التنبيهات</button>
+    <button class="tab-nav-btn" onclick="switchPanel('watchlist',this)" data-icon="⭐" data-label="المفضلة">⭐ المفضلة</button>
+    <button class="tab-nav-btn" onclick="switchPanel('insights',this)" data-icon="🧠" data-label="التحليل الذكي">🧠 التحليل الذكي</button>
+    <button class="tab-nav-btn" onclick="switchPanel('timing',this)" data-icon="⏰" data-label="توقيت الشراء">⏰ توقيت الشراء</button>
+    <button class="tab-nav-btn" onclick="switchPanel('pulse',this)" data-icon="🔥" data-label="نبض السوق">🔥 نبض السوق</button>
+    <button class="tab-nav-btn" onclick="switchPanel('seasons',this)" data-icon="📅" data-label="مواسم الذهب">📅 مواسم الذهب</button>
+    <button class="tab-nav-btn" onclick="switchPanel('news',this)" data-icon="📰" data-label="الأخبار">📰 الأخبار</button>
+    <button class="tab-nav-btn" onclick="switchPanel('about',this)" data-icon="🏛️" data-label="من نحن">🏛️ من نحن</button>
+  </div>
+
 </div>
 
 <!-- MAIN -->
@@ -242,12 +278,16 @@
     <div class="box">
       <div class="box-title">محفظتي الذهبية</div>
       <div id="portfolio-list"><p style="color:var(--muted);font-size:0.84rem;text-align:center;padding:12px;">لا توجد عناصر. أضف ذهبك أدناه.</p></div>
-      <div class="input-row">
+      <div class="input-row" style="grid-template-columns:1fr 1fr 80px;">
         <input class="inp" type="number" id="pf-w" placeholder="الوزن (جم)" style="margin:0;">
         <input class="inp" type="number" id="pf-p" placeholder="سعر الشراء/جم" style="margin:0;">
         <select class="sel" id="pf-k" style="margin:0;"><option value="21">21</option><option value="24">24</option><option value="18">18</option></select>
       </div>
-      <button class="btn-ghost" onclick="addToPortfolio()">+ إضافة للمحفظة</button>
+      <input class="inp" type="date" id="pf-date" style="margin-top:0;">
+      <div style="display:flex;gap:8px;">
+        <button class="btn-ghost" onclick="addToPortfolio()" style="flex:1;">+ إضافة للمحفظة</button>
+        <button class="btn-ghost" onclick="exportPortfolioExcel()" style="flex:0 0 auto;border-color:#1a7a4a;color:#1a7a4a;">📊 Excel</button>
+      </div>
     </div>
     <div class="grid-4">
       <div class="stat-card"><div class="stat-label">القيمة الحالية</div><div class="stat-val up-text" id="pf-total">---</div></div>
@@ -262,9 +302,18 @@
     <div class="grid-2">
       <div class="box">
         <div class="box-title">إضافة تنبيه سعري</div>
+        <select class="sel" id="al-type" onchange="toggleAlertType()">
+          <option value="price">تنبيه بسعر محدد</option>
+          <option value="pct">تنبيه بنسبة تغيّر %</option>
+        </select>
         <select class="sel" id="al-karat"><option value="24">عيار 24</option><option value="21" selected>عيار 21</option><option value="18">عيار 18</option></select>
         <select class="sel" id="al-dir"><option value="above">يصعد فوق ↑</option><option value="below">يهبط تحت ↓</option></select>
         <input class="inp" type="number" id="al-price" placeholder="السعر المستهدف (جنيه/جرام)">
+        <input class="inp" type="number" id="al-pct" placeholder="النسبة % (مثال: 2)" style="display:none;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <label style="font-size:.83rem;color:var(--text);">🔊 تنبيه صوتي</label>
+          <label class="toggle-switch"><input type="checkbox" id="al-sound" checked><span class="toggle-slider"></span></label>
+        </div>
         <button class="btn-primary" onclick="addAlert()">🔔 إضافة التنبيه</button>
       </div>
       <div class="box">
@@ -293,6 +342,308 @@
   <!-- ── NEWS TAB ── -->
   <div class="tab-panel" id="tab-news">
     <div class="box"><div class="box-title">أخبار الذهب والاقتصاد المصري</div><div id="news-list"></div></div>
+  </div>
+
+  <!-- ── HEATMAP TAB ── -->
+  <div class="tab-panel" id="tab-heatmap">
+    <div class="chart-card">
+      <div class="chart-header">
+        <div><div class="chart-title">🌡️ خريطة حرارة السوق</div><div class="chart-subtitle">اللون الأخضر = ارتفاع • الأحمر = هبوط • الأصفر = استقرار</div></div>
+        <div class="live-badge"><div class="live-dot"></div>مباشر</div>
+      </div>
+      <div id="heatmap-grid" class="heatmap-grid"></div>
+    </div>
+    <div class="chart-card" style="margin-top:4px;">
+      <div class="chart-title" style="margin-bottom:1rem;">📊 مقارنة الأداء النسبي</div>
+      <div style="position:relative;height:220px;"><canvas id="heatbarChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── WATCHLIST TAB ── -->
+  <div class="tab-panel" id="tab-watchlist">
+    <div class="grid-2">
+      <div class="box">
+        <div class="box-title">⭐ إضافة للمفضلة</div>
+        <select class="sel" id="wl-type">
+          <option value="gold">ذهب — عيار معين</option>
+          <option value="currency">عملة أجنبية</option>
+        </select>
+        <select class="sel" id="wl-item">
+          <option value="24">عيار 24 — سبائك</option>
+          <option value="21">عيار 21 — الأكثر طلباً</option>
+          <option value="18">عيار 18 — مشغولات</option>
+          <option value="guinea">الجنيه الذهب (8 جم)</option>
+        </select>
+        <button class="btn-primary" onclick="addToWatchlist()">⭐ إضافة للمفضلة</button>
+      </div>
+      <div class="box">
+        <div class="box-title">قائمتي المفضلة</div>
+        <div id="watchlist-list"><p style="color:var(--muted);font-size:.84rem;text-align:center;padding:12px;">لم تضف شيئاً بعد</p></div>
+      </div>
+    </div>
+    <div class="box" style="margin-top:0;">
+      <div class="box-title">متابعة سريعة للمفضلة</div>
+      <div id="watchlist-prices" class="price-grid"></div>
+    </div>
+  </div>
+
+  <!-- ── INSIGHTS TAB ── -->
+  <div class="tab-panel" id="tab-insights">
+    <div class="insight-hero">
+      <div class="insight-hero-icon">🧠</div>
+      <div class="insight-hero-title">التحليل الذكي المبسط</div>
+      <div class="insight-hero-sub">إشارات واضحة للمستثمر العادي — بدون تعقيد</div>
+    </div>
+
+    <div class="insight-signal-card" id="insight-main-signal">
+      <div class="insight-signal-loading"><span class="spinner"></span> جاري تحليل السوق...</div>
+    </div>
+
+    <div class="grid-2" style="margin-top:1rem;">
+      <div class="insight-meter-card">
+        <div class="insight-meter-title">مؤشر الشراء الآن</div>
+        <div class="insight-meter-wrap">
+          <div class="insight-meter-bar" id="buy-meter-bar"></div>
+        </div>
+        <div class="insight-meter-labels"><span>بيع</span><span>محايد</span><span>شراء</span></div>
+        <div class="insight-meter-val" id="buy-meter-val">---</div>
+      </div>
+      <div class="insight-meter-card">
+        <div class="insight-meter-title">مؤشر الذروة (Overbought)</div>
+        <div class="insight-meter-wrap">
+          <div class="insight-meter-bar" id="peak-meter-bar" style="background:linear-gradient(90deg,var(--up),var(--gold),var(--down));"></div>
+        </div>
+        <div class="insight-meter-labels"><span>هبوط</span><span>متوازن</span><span>ذروة</span></div>
+        <div class="insight-meter-val" id="peak-meter-val">---</div>
+      </div>
+    </div>
+
+    <div class="insight-cards-row" id="insight-cards-row"></div>
+
+    <div class="box" style="margin-top:1rem;">
+      <div class="box-title">🤖 اسأل المحلل الذكي</div>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:10px;">تحليل فوري مبني على البيانات الحقيقية الحالية</p>
+      <input class="inp" id="insight-q" type="text" placeholder="مثال: هل الوقت مناسب للشراء؟ هل السوق في ذروة؟">
+      <button class="btn-primary" onclick="askInsightAI()" id="insight-ai-btn">تحليل الآن 🧠</button>
+      <div class="ai-output" id="insight-ai-out" style="margin-top:10px;display:none;"></div>
+    </div>
+  </div>
+
+  <!-- ── TIMING TAB ── -->
+  <div class="tab-panel" id="tab-timing">
+    <div class="timing-hero" id="timing-hero-card">
+      <div class="timing-hero-inner">
+        <div class="timing-icon" id="timing-icon">⏳</div>
+        <div class="timing-label" id="timing-label">جاري التحليل...</div>
+        <div class="timing-badge" id="timing-badge">---</div>
+        <div class="timing-desc" id="timing-desc">يرجى الانتظار</div>
+      </div>
+    </div>
+
+    <div class="timing-grid">
+      <div class="timing-factor-card">
+        <div class="tf-icon">📉</div>
+        <div class="tf-title">اتجاه 10 أيام</div>
+        <div class="tf-val" id="tf-trend">---</div>
+        <div class="tf-bar-wrap"><div class="tf-bar" id="tf-trend-bar"></div></div>
+      </div>
+      <div class="timing-factor-card">
+        <div class="tf-icon">🌊</div>
+        <div class="tf-title">تقلب السوق</div>
+        <div class="tf-val" id="tf-vol">---</div>
+        <div class="tf-bar-wrap"><div class="tf-bar" id="tf-vol-bar"></div></div>
+      </div>
+      <div class="timing-factor-card">
+        <div class="tf-icon">💱</div>
+        <div class="tf-title">ضغط الدولار</div>
+        <div class="tf-val" id="tf-usd">---</div>
+        <div class="tf-bar-wrap"><div class="tf-bar" id="tf-usd-bar"></div></div>
+      </div>
+      <div class="timing-factor-card">
+        <div class="tf-icon">⚡</div>
+        <div class="tf-title">تغير عيار 21 اليوم</div>
+        <div class="tf-val" id="tf-k21">---</div>
+        <div class="tf-bar-wrap"><div class="tf-bar" id="tf-k21-bar"></div></div>
+      </div>
+    </div>
+
+    <div class="timing-alerts-row" id="timing-alerts-row"></div>
+
+    <div class="chart-card" style="margin-top:1rem;">
+      <div class="chart-header">
+        <div class="chart-title">حركة عيار 21 — آخر 10 أيام (جنيه/جرام)</div>
+      </div>
+      <div style="position:relative;height:200px;"><canvas id="timingChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── PULSE TAB ── -->
+  <div class="tab-panel" id="tab-pulse">
+    <div class="pulse-hero">
+      <div class="pulse-ring" id="pulse-ring">
+        <div class="pulse-inner">
+          <div class="pulse-val" id="pulse-score">--</div>
+          <div class="pulse-label">نشاط السوق</div>
+        </div>
+      </div>
+      <div class="pulse-status" id="pulse-status">---</div>
+      <div class="pulse-sub" id="pulse-sub">---</div>
+    </div>
+
+    <div class="pulse-grid">
+      <div class="pulse-meter-card">
+        <div class="pm-title">🔥 ضغط الشراء</div>
+        <div class="pm-bar-wrap"><div class="pm-bar pm-buy" id="pm-buy-bar"></div></div>
+        <div class="pm-val" id="pm-buy-val">---</div>
+      </div>
+      <div class="pulse-meter-card">
+        <div class="pm-title">📉 ضغط البيع</div>
+        <div class="pm-bar-wrap"><div class="pm-bar pm-sell" id="pm-sell-bar"></div></div>
+        <div class="pm-val" id="pm-sell-val">---</div>
+      </div>
+      <div class="pulse-meter-card">
+        <div class="pm-title">😐 الاستقرار</div>
+        <div class="pm-bar-wrap"><div class="pm-bar pm-neutral" id="pm-neutral-bar"></div></div>
+        <div class="pm-val" id="pm-neutral-val">---</div>
+      </div>
+    </div>
+
+    <div class="pulse-signals" id="pulse-signals"></div>
+
+    <div class="chart-card" style="margin-top:1rem;">
+      <div class="chart-header"><div class="chart-title">نشاط السوق المصري — آخر 7 أيام</div></div>
+      <div style="position:relative;height:180px;"><canvas id="pulseChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── SEASONS TAB ── -->
+  <div class="tab-panel" id="tab-seasons">
+    <div class="seasons-hero">
+      <div class="seasons-icon">📅</div>
+      <div class="seasons-title">مواسم الذهب المصرية</div>
+      <div class="seasons-sub">الطلب على الذهب في مصر موسمي — كن مستعداً مسبقاً</div>
+    </div>
+
+    <div class="seasons-now-card" id="seasons-now-card"></div>
+
+    <div class="seasons-timeline" id="seasons-timeline"></div>
+
+    <div class="box" style="margin-top:1rem;">
+      <div class="box-title">📊 تأثير المواسم على الأسعار</div>
+      <div style="position:relative;height:200px;margin-top:.5rem;"><canvas id="seasonsChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT TAB ── -->
+  <div class="tab-panel" id="tab-about">
+
+    <div class="about-hero">
+      <div class="about-hero-icon">🥇</div>
+      <h2 class="about-hero-title">منصة ذهب</h2>
+      <p class="about-hero-tagline">شريكك الرقمي للاستثمار الذكي في المعادن الثمينة</p>
+    </div>
+
+    <div class="about-card about-card-main">
+      <div class="about-intro-line"></div>
+      <p class="about-desc">
+        منصة ذهب هي منصة رقمية متخصصة في توفير أسعار الذهب والفضة والعملات بشكل لحظي ودقيق، مع تقديم أدوات ذكية وتحليلات متقدمة تساعد المستثمرين والمدخرين على اتخاذ قرارات مالية واستثمارية أكثر ثقة ووضوحًا.
+      </p>
+    </div>
+
+    <div class="about-grid-2">
+      <div class="about-card about-vision-card">
+        <div class="about-card-label">✦ رؤيتنا</div>
+        <p class="about-card-text">
+          في منصة ذهب، لا ننظر إلى المعادن الثمينة باعتبارها مجرد أصول تقليدية، بل نراها ركائز أساسية للاستقرار المالي وبناء مستقبل استثماري أكثر أمانًا.
+        </p>
+      </div>
+      <div class="about-card about-mission-card">
+        <div class="about-card-label">✦ مهمتنا</div>
+        <p class="about-card-text">
+          نعمل على تقديم بيانات محدثة باستمرار، وتحليلات واضحة، وتجربة استخدام سهلة وسريعة تضع المعلومات المهمة بين يديك في الوقت المناسب.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-label">✦ ما نقدمه</div>
+      <p class="about-card-text" style="margin-bottom:1.4rem;">
+        نسعى إلى تحويل البيانات المالية المعقدة إلى مؤشرات وأدوات عملية تساعد المستخدم على متابعة حركة السوق، فهم اتجاهات الأسعار، واتخاذ قرارات مبنية على معلومات دقيقة وموثوقة.
+      </p>
+      <div class="about-features">
+        <div class="about-feature-item">
+          <div class="about-feature-icon">📡</div>
+          <div>
+            <div class="about-feature-title">أسعار لحظية</div>
+            <div class="about-feature-sub">تحديث فوري كل 60 ثانية من مصادر موثوقة عالمياً</div>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">🤖</div>
+          <div>
+            <div class="about-feature-title">تحليل بالذكاء الاصطناعي</div>
+            <div class="about-feature-sub">تحليلات فورية ذكية مبنية على بيانات السوق الحقيقية</div>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">🧮</div>
+          <div>
+            <div class="about-feature-title">أدوات حسابية متقدمة</div>
+            <div class="about-feature-sub">حاسبات الشراء والمصنعية ومحوّل العملات</div>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">🔔</div>
+          <div>
+            <div class="about-feature-title">تنبيهات سعرية</div>
+            <div class="about-feature-sub">إشعارات فورية عند وصول الذهب للسعر المستهدف</div>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">💼</div>
+          <div>
+            <div class="about-feature-title">إدارة المحفظة</div>
+            <div class="about-feature-sub">تتبع استثماراتك ومعرفة أرباحك وخسائرك بدقة</div>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">📊</div>
+          <div>
+            <div class="about-feature-title">رسوم بيانية تاريخية</div>
+            <div class="about-feature-sub">تحليل حركة الأسعار خلال آخر 7 أو 14 أو 30 يوماً</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-quote-card">
+      <div class="about-quote-mark">"</div>
+      <p class="about-quote-text">
+        منصة ذهب ليست مجرد موقع أو تطبيق، بل شريك رقمي واستراتيجي لكل من يرى في الذهب والفضة فرصة للاستثمار الذكي وبناء مستقبل مالي أكثر استقرارًا.
+      </p>
+      <div class="about-quote-divider"></div>
+      <div class="about-quote-meta">— فريق منصة ذهب</div>
+    </div>
+
+    <div class="about-stats">
+      <div class="about-stat">
+        <div class="about-stat-val">٦٠ث</div>
+        <div class="about-stat-label">دورة تحديث الأسعار</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-val">٣+</div>
+        <div class="about-stat-label">عيارات ذهب مدعومة</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-val">٥+</div>
+        <div class="about-stat-label">عملات أجنبية</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-val">٢٤/٧</div>
+        <div class="about-stat-label">متاح على مدار الساعة</div>
+      </div>
+    </div>
+
   </div>
 
 </div><!-- /main -->
