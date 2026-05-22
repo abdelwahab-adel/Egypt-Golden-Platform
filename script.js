@@ -887,23 +887,6 @@ const TRANS = {
   }
 };
 
-
-;
-  document.querySelectorAll('.tab-nav-btn').forEach(btn => {
-    const fn = btn.getAttribute('onclick') || '';
-    const m = fn.match(/switchPanel\('(\w+)'/);
-    if(m && tabMap[m[1]]) btn.textContent = tabMap[m[1]];
-  });
-  // Hero
-  const heroTitle = document.querySelector('.hero-title');
-  const heroSub = document.querySelector('.hero-sub');
-  if(heroTitle) heroTitle.textContent = t.heroTitle;
-  if(heroSub) heroSub.innerHTML = t.heroSub;
-  // data-ar / data-en elements
-  document.querySelectorAll('[data-ar]').forEach(el => {
-    el.textContent = 'ar' === 'ar' ? el.dataset.ar : el.dataset.en;
-  });
-
 /* ══════════════════════════════════
    SMART TIMING INDICATOR
 ══════════════════════════════════ */
