@@ -1,0 +1,131 @@
+/* تنسيق عرض أسعار الذهب */
+
+.gold-prices-container {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+  margin: 20px 0;
+  direction: rtl;
+  text-align: center;
+}
+
+.gold-prices-container h2 {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.timestamp {
+  color: #666;
+  font-size: 0.95em;
+  margin: 5px 0;
+  font-style: italic;
+}
+
+.source {
+  color: #555;
+  font-size: 0.85em;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.prices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.price-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.price-card h3 {
+  color: #333;
+  font-size: 1.3em;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ffd700;
+  padding-bottom: 10px;
+}
+
+.price-card .price {
+  font-size: 2em;
+  font-weight: bold;
+  color: #ffd700;
+  margin: 15px 0;
+}
+
+.price-card p {
+  color: #999;
+  font-size: 0.9em;
+  margin: 0;
+}
+
+.carat-24 {
+  border-top: 4px solid #d4af37;
+}
+
+.carat-21 {
+  border-top: 4px solid #c9a961;
+}
+
+.carat-18 {
+  border-top: 4px solid #b39c6b;
+}
+
+.refresh-btn {
+  background: #333;
+  color: #ffd700;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.refresh-btn:hover {
+  background: #555;
+  transform: scale(1.05);
+}
+
+.refresh-btn:active {
+  transform: scale(0.98);
+}
+
+/* للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .gold-prices-container {
+    padding: 20px;
+  }
+
+  .gold-prices-container h2 {
+    font-size: 1.5em;
+  }
+
+  .prices-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .price-card .price {
+    font-size: 1.5em;
+  }
+
+  .timestamp, .source {
+    font-size: 0.8em;
+  }
+}
